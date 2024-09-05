@@ -6,6 +6,13 @@ package vista;
 
 import controlador.UsuarioControlador;
 import dataBase.CConexion;
+import java.awt.Image;
+import java.io.File;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.plaf.FileChooserUI;
 
 /**
  *
@@ -13,6 +20,8 @@ import dataBase.CConexion;
  */
 public class FormPrincipal extends javax.swing.JFrame {
 
+    //variable global
+    public File selecFile;
     /**
      * Creates new form FormPrincipal
      */
@@ -48,8 +57,8 @@ public class FormPrincipal extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        TFRuta = new javax.swing.JTextField();
+        TFimage = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -89,9 +98,9 @@ public class FormPrincipal extends javax.swing.JFrame {
 
         jLabel6.setText("Imagen seleccionada");
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        TFRuta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                TFRutaActionPerformed(evt);
             }
         });
 
@@ -110,10 +119,10 @@ public class FormPrincipal extends javax.swing.JFrame {
                         .addGap(0, 31, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTextField5))
+                        .addComponent(TFRuta))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(TFimage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -124,9 +133,9 @@ public class FormPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TFRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(TFimage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -259,12 +268,40 @@ public class FormPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_TFidActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        
+        JFileChooser jFileChooser = new JFileChooser();
+        
+        int result = jFileChooser.showOpenDialog(null);
+        
+        if (result == JFileChooser.APPROVE_OPTION) {
+            
+            selecFile = jFileChooser.getSelectedFile();
+            TFRuta.setText(selecFile.getName());
+            
+            try {
+                
+                Image img = ImageIO.read(selecFile);
+                ImageIcon originalIcon = new ImageIcon(img);
+                
+                int TFanchura = TFimage.getWidth();
+                int TFaltura = TFimage.getHeight();
+                
+                Image scaledImage = originalIcon.getImage().getScaledInstance(TFanchura, TFaltura, Image.SCALE_SMOOTH);
+                TFimage.setIcon(new ImageIcon(scaledImage));
+                
+            } catch (Exception e) {
+                
+                JOptionPane.showMessageDialog(null, "Error al mostrar imagen");
+                
+            }
+            
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void TFRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFRutaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_TFRutaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,7 +343,9 @@ public class FormPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField TFApellido;
     private javax.swing.JTextField TFEdad;
     private javax.swing.JTextField TFNombre;
+    private javax.swing.JTextField TFRuta;
     private javax.swing.JTextField TFid;
+    private javax.swing.JLabel TFimage;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -314,13 +353,11 @@ public class FormPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }

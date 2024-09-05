@@ -2,15 +2,27 @@
 package controlador;
 
 import dataBase.CConexion;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class UsuarioControlador {
     
     int idSexo;
+    
+    CConexion cConexion;
+    
+    //constructor vacio
+    public UsuarioControlador() {
+        
+        cConexion = new CConexion();
+        
+    }
+    
     
     public void setIdsexo(int idSexo) {
         
@@ -19,8 +31,6 @@ public class UsuarioControlador {
     }
     
     public void mostrarSexo(JComboBox CBsexo) {
-        
-        CConexion cConexion = new CConexion();
         
         Statement st;
         
@@ -56,6 +66,13 @@ public class UsuarioControlador {
             cConexion.cerrarConexion();
             
         }
+        
+    }
+    
+    //metodo agregar usuario
+    public void agregarUsuario(JTextField TFNombre, JTextField TFApellido, JComboBox CBsexo, JTextField TFEdad, File TFImage) {
+        
+        String consulta = "insert into usuarios (nombres, apelldidos, fksexo, foto) values (?,?,?,?)";
         
     }
     
